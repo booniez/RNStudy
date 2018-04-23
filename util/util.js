@@ -9,6 +9,8 @@ module.exports = {
     statusBarHeight: 20,
     /*最小线宽*/
     pixel: 1 / PixelRatio.get(),
+    name: '昵称',
+    sex: '男',
 
     /*屏幕尺寸*/
     size: {

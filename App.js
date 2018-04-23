@@ -60,6 +60,8 @@ import logoin from './component/profile/logoin';
 import register from './component/profile/register';
 import scrollView from './component/revert/scrollView';
 import resetPassword from './component/profile/resetPassword';
+import modifyName from './component/profile/modifyName';
+import editSex from './component/profile/editSex';
 
 export default class App extends Component< {} > {
   render() {
@@ -114,6 +116,8 @@ const StackNavigators = StackNavigator({
   register: {screen: register},
   scrollView: {screen: scrollView},
   resetPassword: {screen: resetPassword},
+  modifyName: {screen: modifyName},
+  editSex: {screen: editSex},
 },
 {
   navigationOptions:{

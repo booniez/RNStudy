@@ -8,10 +8,29 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Util from '../../util/util';
+import ImagePicker from 'react-native-image-picker';
 
+
+var photoOptions = {
+    //底部弹出框选项
+    title:'请选择',
+    cancelButtonTitle:'取消',
+    takePhotoButtonTitle:'拍照',
+    chooseFromLibraryButtonTitle:'选择相册',
+    quality:0.75,
+    allowsEditing:true,
+    noData:false,
+    storageOptions: {
+        skipBackup: true,
+        path:'images'
+    }
+}
 export default class profileMessage extends Component < {} > {
   constructor() {
     super()
+    this.state = {
+      headerImg: 'user_head_1'
+    }
   }
   static navigationOptions = {
     headerTitle: '个人信息'
@@ -20,9 +39,9 @@ export default class profileMessage extends Component < {} > {
     return(
       <View style={styles.container}>
         <ScrollView>
-          {this._renderCell('头像',0,'','user_head_1',false)}
-          {this._renderCell('昵称',1,'JLM','',false)}
-          {this._renderCell('性别',2,'男','',false)}
+          {this._renderCell('头像',0,'',this.state.headerImg,false)}
+          {this._renderCell('昵称',1,Util.name,'',false)}
+          {this._renderCell('性别',2,Util.sex,'',false)}
           {this._renderCell('手机号码',3,'18328067022','',true)}
         </ScrollView>
       </View>
@@ -63,14 +82,32 @@ export default class profileMessage extends Component < {} > {
       )
     }else {
       return(
-        <Image source={{uri: rightIconName}} style={{width:54*Util.size.width/375,height:54*Util.size.width/375,marginTop:18*Util.size.height/667,marginBottom:18*Util.size.height/667,}} />
+        <Image source={{uri: rightIconName}} style={{width:54*Util.size.width/375,height:54*Util.size.width/375,marginTop:18*Util.size.height/667,marginBottom:18*Util.size.height/667,borderRadius:54*Util.size.width/375}} />
       )
     }
   }
   _choseMudel(tag) {
     switch (tag) {
       case 0:
-        // this.props.navigation.navigate('notificationCenter');
+
+      ImagePicker.showImagePicker(photoOptions,(response) =>{
+
+
+               if (response.didCancel){
+                   return
+               }
+               if(!response.error) {
+                 this.setState({
+                   headerImg: response.uri
+                 })
+               }
+           })
+        break;
+      case 1:
+        this.props.navigation.navigate('modifyName')
+        break;
+      case 2:
+        this.props.navigation.navigate('editSex')
         break;
       default:
 

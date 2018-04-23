@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import Util from '../../util/util';
 
+
 export default class logoin extends Component < {} > {
   constructor() {
     super()
     this.state = {
       phone: '',
       password: '',
-      code: ''
+      code: '',
     }
   }
   static navigationOptions = {
@@ -68,6 +69,7 @@ export default class logoin extends Component < {} > {
   _logo() {
 
   }
+  
 
 }
 const styles = StyleSheet.create({

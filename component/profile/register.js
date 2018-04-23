@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import Util from '../../util/util';
+import Timer from './../common/Util/timer';
 
 export default class register extends Component < {} > {
   constructor() {
@@ -16,7 +17,10 @@ export default class register extends Component < {} > {
     this.state = {
       phone: '',
       password: '',
-      isAgreeProtocol: false
+      isAgreeProtocol: false,
+      count:60,
+      isFinish:true,
+      countDownText: ''
     }
   }
   static navigationOptions = {
@@ -68,8 +72,10 @@ export default class register extends Component < {} > {
             />
           </View>
           <View>
+            {this.state.isFinish ? <View /> : <Timer interval={1000} onTimer={this.onTimer}/>}
             <TouchableOpacity style={styles.verificationBtnStyle} onPress={this._verificationCode.bind(this)} >
-              <Text style={{marginLeft:16,marginRight:16,marginTop:10,marginBottom:10,color:'#fff',fontSize:14}} >获取验证码</Text>
+
+              <Text style={{marginLeft:16,marginRight:16,marginTop:10,marginBottom:10,color:'#fff',fontSize:14}} >{this.state.countDownText}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -89,6 +95,13 @@ export default class register extends Component < {} > {
       </View>
     )
   }
+  componentDidMount() {
+    if (this.state.isFinish) {
+      this.setState({
+        countDownText: '获取验证码'
+      })
+    }
+  }
   _agree() {
     this.setState({
       isAgreeProtocol: !this.state.isAgreeProtocol
@@ -98,6 +111,30 @@ export default class register extends Component < {} > {
 
   }
   _verificationCode() {
+
+    this.againTime()
+
+  }
+  onTimer = () => {
+        if(this.state.count>1){
+            this.setState({countDownText: '剩余' + (this.state.count - 1) + 's',count: this.state.count - 1});
+        }else {
+
+            this.setState({isFinish:true,countDownText: '获取验证码'});
+        }
+  }
+  againTime=()=>{
+        if(this.state.isFinish){
+            this.setState({
+                count:60,
+                isFinish:false,
+            });
+            //回调，当使用组件时，可用传入回调事件
+            if(this.props.onPress){
+                this.props.onPress();
+            }
+        }
+
 
   }
 

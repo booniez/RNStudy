@@ -5,6 +5,8 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Modal,
+  TouchableHighlight,
 } from 'react-native';
 
 import Util from '../../util/util';
@@ -12,6 +14,9 @@ import Util from '../../util/util';
 export default class setting extends Component < {} > {
   constructor() {
     super();
+    this.state = {
+      show:false,
+    }
   }
   static navigationOptions = {
     headerTitle:'设置'
@@ -25,14 +30,58 @@ export default class setting extends Component < {} > {
         {this._renderCell('清除缓存',2)}
         {this._renderCell('推送开关',3)}
         <TouchableOpacity style={styles.BtnStyle} onPress={this._logout.bind(this)} >
-          <Text style={{color:'#fff',fontSize:16}} >退出登陆</Text>
+          <Text style={{color:'#fff',fontSize:16}} >退出登录</Text>
         </TouchableOpacity>
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={this.state.show}
+          onShow={() => {}}
+          onRequestClose={() => {}} >
+          <View style={styles.modalStyle}>
+            <View style={styles.subView}>
+              <Text style={styles.contentText}>
+                确定清空缓存12M？
+              </Text>
+              <View style={styles.horizontalLine} />
+              <View style={styles.buttonView}>
+                <TouchableHighlight underlayColor='transparent'
+                  style={styles.buttonStyle}
+                  onPress={this._cancel.bind(this)}>
+                  <Text style={styles.cancelbuttonText}>
+                    取消
+                  </Text>
+                </TouchableHighlight>
+                <View style={styles.verticalLine} />
+                <TouchableHighlight underlayColor='transparent'
+                  style={styles.buttonStyle}
+                  onPress={this._makeSure.bind(this)}>
+                  <Text style={styles.buttonText}>
+                    确定
+                  </Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+       </Modal>
       </View>
     )
   }
 
   _logout() {
 
+  }
+  _setModalVisible() {
+    let isShow = this.state.show;
+    this.setState({
+      show:!isShow,
+    });
+  }
+  _cancel() {
+    this._setModalVisible()
+  }
+  _makeSure() {
+    this._setModalVisible();
   }
   _renderCell(title,tag) {
     return(
@@ -74,7 +123,7 @@ export default class setting extends Component < {} > {
 
         break;
       case 2:
-
+        this._setModalVisible()
         break;
       default:
 
@@ -137,5 +186,72 @@ const styles = StyleSheet.create({
     borderRadius: 49*Util.size.height/667/2,
     alignItems: 'center',
     justifyContent:'center',
+  },
+  modalStyle: {
+    // backgroundColor:'#ccc',
+    alignItems: 'center',
+    justifyContent:'center',
+    flex:1,
+  },
+  // modal上子View的样式
+  subView:{
+    marginLeft:60,
+    marginRight:60,
+    backgroundColor:'#fff',
+    alignSelf: 'stretch',
+    justifyContent:'center',
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor:'#ccc',
+  },
+  // 标题
+  titleText:{
+    marginTop:10,
+    marginBottom:5,
+    fontSize:16,
+    fontWeight:'bold',
+    textAlign:'center',
+  },
+  // 内容
+  contentText:{
+    marginTop:32*Util.size.height/667,
+    marginBottom:32*Util.size.height/667,
+    fontSize:16,
+    color:'#333',
+
+    textAlign:'center',
+  },
+  // 水平的分割线
+  horizontalLine:{
+    marginTop:5,
+    height:0.5,
+    backgroundColor:'#ccc',
+  },
+  // 按钮
+  buttonView:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonStyle:{
+    flex:1,
+    height:44,
+    alignItems: 'center',
+    justifyContent:'center',
+  },
+  // 竖直的分割线
+  verticalLine:{
+    width:0.5,
+    height:44,
+    backgroundColor:'#ccc',
+  },
+  buttonText:{
+    fontSize:16,
+    color:'#E22924',
+    textAlign:'center',
+  },
+  cancelbuttonText:{
+    fontSize:16,
+    color:'#333',
+    textAlign:'center',
   },
 })
