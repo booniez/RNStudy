@@ -755,6 +755,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 6UYT7KDD5T;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1320,6 +1321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6UYT7KDD5T;
@@ -1336,6 +1338,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = toy23;
+				PROVISIONING_PROFILE = "8bf1bcfb-0139-402b-b298-2a9310fb0a7e";
+				PROVISIONING_PROFILE_SPECIFIER = toy;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1344,6 +1348,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6UYT7KDD5T;
 				HEADER_SEARCH_PATHS = (
@@ -1359,6 +1364,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = toy23;
+				PROVISIONING_PROFILE = "8bf1bcfb-0139-402b-b298-2a9310fb0a7e";
+				PROVISIONING_PROFILE_SPECIFIER = toy;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

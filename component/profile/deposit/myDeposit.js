@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableOpacity,
   ListView,
   Modal,
@@ -74,7 +75,7 @@ export default class myDeposit extends Component < {} > {
            <View style={styles.modalStyle}>
                <View style={styles.subView}>
                    <View style={styles.topTitleView} >
-                       <Text style={{marginLeft: Util.size.width*155/375,fontSize:18}} >押金缴纳</Text>
+                       <Text style={{marginLeft: Util.size.width*155/375,fontSize:18}} >充值押金</Text>
                        <View>
                        <TouchableOpacity onPress={this._rightButtonClick.bind(this)} >
                          <Text style={styles.cancelText}>取消</Text>
@@ -127,7 +128,23 @@ export default class myDeposit extends Component < {} > {
 
   }
   _pay() {
-
+    this._setModalVisible();
+  }
+  _rightButtonClick() {
+      this._setModalVisible();
+  }
+  makeSurePay() {
+      this._setModalVisible();
+  }
+  _chosePayType(type) {
+      // alert(type)
+      this._setModalVisible();
+  }
+  _setModalVisible() {
+      let isShow = this.state.show;
+      this.setState({
+        show:!isShow,
+      });
   }
 }
 const styles = StyleSheet.create({

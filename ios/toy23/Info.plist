@@ -41,7 +41,6 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSAppTransportSecurity</key>
-	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -51,6 +50,16 @@
 				<true/>
 			</dict>
 		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>App 需要访问你的相机，用来拍照上传图片</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App 需要访问你的相册，用来上传图片</string>
+	<key>NSLocationUsageDescription</key>
+	<string>App 需要访问你的位置信息，用来查看周边玩具信息</string>
 </dict>
 </plist>

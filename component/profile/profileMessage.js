@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  Platform,
   Text,
   View,
   Image,
   ScrollView,
   TouchableOpacity,
+  Picker,
+  Modal,
 } from 'react-native';
 import Util from '../../util/util';
 import ImagePicker from 'react-native-image-picker';
@@ -29,7 +32,10 @@ export default class profileMessage extends Component < {} > {
   constructor() {
     super()
     this.state = {
-      headerImg: 'user_head_1'
+      headerImg: 'user_head_1',
+      sex: '男',
+      isHiddenPicker: true,
+      show:false,
     }
   }
   static navigationOptions = {
@@ -41,13 +47,64 @@ export default class profileMessage extends Component < {} > {
         <ScrollView>
           {this._renderCell('头像',0,'',this.state.headerImg,false)}
           {this._renderCell('昵称',1,Util.name,'',false)}
-          {this._renderCell('性别',2,Util.sex,'',false)}
+          {this._renderCell('性别',2,this.state.sex,'',false)}
           {this._renderCell('手机号码',3,'18328067022','',true)}
         </ScrollView>
+        <Modal
+            animationType='slide'
+            transparent={true}
+            visible={this.state.show}
+            onShow={() => {}}
+            onRequestClose={() => {}} >
+            <View style={styles.modalStyle}>
+                <View style={styles.subView}>
+                    <View style={styles.topTitleView} >
+                        <Text style={{marginLeft: Util.size.width*155/375,fontSize:18}} >选择性别</Text>
+                        <View>
+                        <TouchableOpacity onPress={this._rightButtonClick.bind(this)} >
+                          <Text style={styles.cancelText}>取消</Text>
+                        </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ borderColor: '#F0F0F0', borderWidth: Util.pixel, marginTop: 5 }} />
+
+                    <TouchableOpacity style={styles.cellStyle} onPress={this._chosePayType.bind(this,'男')} >
+                      <Text style={styles.textStyle}>
+                          男
+                      </Text>
+
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.cellStyle} onPress={this._chosePayType.bind(this,'女')} >
+
+                        <Text style={styles.textStyle}>
+                            女
+                        </Text>
+
+                    </TouchableOpacity>
+
+                </View>
+            </View>
+        </Modal>
       </View>
     )
   }
-
+  _setModalVisible() {
+      let isShow = this.state.show;
+      this.setState({
+        show:!isShow,
+      });
+  }
+  _chosePayType(type) {
+      // alert(type)
+      this._setModalVisible();
+      this.setState({
+        sex: type
+      })
+      // this.props.navigation.navigate('makeSureOpenCabinet');
+  }
+  _rightButtonClick() {
+      this._setModalVisible();
+  }
   _renderCell(title,tag,rightTitle,img,isHiddenMore) {
     return(
       <TouchableOpacity activeOpacity={0.5} onPress={this._choseMudel.bind(this,tag)}>
@@ -82,7 +139,7 @@ export default class profileMessage extends Component < {} > {
       )
     }else {
       return(
-        <Image source={{uri: rightIconName}} style={{width:54*Util.size.width/375,height:54*Util.size.width/375,marginTop:18*Util.size.height/667,marginBottom:18*Util.size.height/667,borderRadius:54*Util.size.width/375}} />
+        <Image source={{uri: rightIconName}} style={{width:54*Util.size.width/375,height:54*Util.size.width/375,marginTop:18*Util.size.height/667,marginBottom:18*Util.size.height/667,borderRadius:(Platform.OS === 'ios' ? 27 : 54)*Util.size.width/375}} />
       )
     }
   }
@@ -107,7 +164,7 @@ export default class profileMessage extends Component < {} > {
         this.props.navigation.navigate('modifyName')
         break;
       case 2:
-        this.props.navigation.navigate('editSex')
+        this._setModalVisible()
         break;
       default:
 
@@ -155,5 +212,60 @@ const styles = StyleSheet.create({
   },
   leftTitleStyle: {
     fontSize:15
+  },
+  // modal的样式
+  modalStyle: {
+      // backgroundColor:'#ccc',
+      alignItems: 'center',
+      justifyContent:'center',
+      // marginBottom:0,
+      marginTop: 600*Util.size.height/812,
+      flex:1,
+  },
+  // modal上子View的样式
+  subView:{
+      backgroundColor:'#fff',
+
+      // justifyContent:'center',
+
+  },
+  topTitleView: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: Util.size.width,
+      // height: 40*Util.size.height/812,
+      paddingTop:14*Util.size.height/667,
+      paddingBottom:14*Util.size.height/667,
+      flexDirection: 'row',
+  },
+  amount: {
+      flexDirection: 'row',
+      // alignItems: 'center',
+      height: 80*Util.size.height/667,
+
+  },
+  cellStyle: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent:'center',
+      borderBottomColor: '#dddddd',
+      borderBottomWidth: 0.5,
+      height:40*Util.size.height/812,
+  },
+  textStyle: {
+    fontSize:16,
+    color:'#333',
+    marginLeft: 12*Util.size.width/375,
+  },
+  imageStyle: {
+    width:28*Util.size.width/375,
+    height:28*Util.size.width/375,
+    marginLeft: 16*Util.size.width/375
+  },
+  cancelText: {
+    fontSize:16,
+    color:'#333',
+    marginRight:18*Util.size.width/375,
   }
 })
