@@ -34,6 +34,7 @@ export default class profileMessage extends Component < {} > {
     this.state = {
       headerImg: 'user_head_1',
       sex: '男',
+      name: Util.name,
       isHiddenPicker: true,
       show:false,
     }
@@ -41,12 +42,18 @@ export default class profileMessage extends Component < {} > {
   static navigationOptions = {
     headerTitle: '个人信息'
   }
+  componentWillMount() {
+    // alert(Util.name)
+  }
+  componentDidMount() {
+
+  }
   render() {
     return(
       <View style={styles.container}>
         <ScrollView>
           {this._renderCell('头像',0,'',this.state.headerImg,false)}
-          {this._renderCell('昵称',1,Util.name,'',false)}
+          {this._renderCell('昵称',1,this.state.name,'',false)}
           {this._renderCell('性别',2,this.state.sex,'',false)}
           {this._renderCell('手机号码',3,'18328067022','',true)}
         </ScrollView>
@@ -161,7 +168,7 @@ export default class profileMessage extends Component < {} > {
            })
         break;
       case 1:
-        this.props.navigation.navigate('modifyName')
+        this.props.navigation.navigate('modifyName',{callBack:(name)=>{this.setState({name:name})}})
         break;
       case 2:
         this._setModalVisible()

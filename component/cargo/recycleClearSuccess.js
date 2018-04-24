@@ -28,7 +28,7 @@ export default class recycleClearSuccess extends Component < {} > {
     )
   }
   _confirm() {
-
+    this.props.navigation.pop(2)
   }
 }
 const styles = StyleSheet.create({

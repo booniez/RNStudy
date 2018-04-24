@@ -26,7 +26,7 @@ export default class removeCargoSuccess extends Component < {} > {
         </TouchableOpacity>
         <View />
         <TouchableOpacity style={styles.BtnStyle} onPress={this._confirm.bind(this)} >
-          <Text style={{color:'#fff',fontSize:16}} >完成添加</Text>
+          <Text style={{color:'#fff',fontSize:16}} >下架完成</Text>
         </TouchableOpacity>
       </View>
     )
@@ -36,6 +36,7 @@ export default class removeCargoSuccess extends Component < {} > {
   }
   _confirm() {
     // this.props.navigation.goBack('cargo');
+    this.props.navigation.pop(2)
   }
 }
 const styles = StyleSheet.create({

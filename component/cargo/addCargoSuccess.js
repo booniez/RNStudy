@@ -33,9 +33,11 @@ export default class addCargoSuccess extends Component < {} > {
   }
   _back() {
     // this.props.navigation.goBack('addCargo')
+    this.props.navigation.pop(2)
   }
   _confirm() {
     // this.props.navigation.goBack('cargo')
+    this.props.navigation.pop(3)
   }
 }
 const styles = StyleSheet.create({

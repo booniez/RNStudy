@@ -37,7 +37,7 @@ export default class openCaninetFinish extends Component<{}> {
         )
     }
     _finish() {
-      alert('完成')
+      this.props.navigation.pop(7)
     }
 
 }

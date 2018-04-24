@@ -103,6 +103,7 @@ export default class revertFinish extends Component<{}> {
         // alert(type)
         this._setModalVisible();
         // this.props.navigation.navigate('makeSureOpenCabinet');
+        this.props.navigation.pop(2)
     }
     _setModalVisible() {
         let isShow = this.state.show;

@@ -14,20 +14,25 @@ export default class modifyName extends Component < {} > {
       name: ''
     }
   }
-  static navigationOptions = ({navigation,screenProps}) =>  ({
+  static navigationOptions = ({navigation}) =>  ({
     headerTitle: '修改昵称',
-    headerRight: <TouchableOpacity onPress={()=>{
-      navigation.goBack()
+    headerRight: <TouchableOpacity onPress={() => {
+      console.log(navigation);
+      navigation.state.params.clickParams();
     }} >
       <Text style={styles.rightTitle} >保存  </Text>
     </TouchableOpacity>
   })
-  _save= () => {
-    alert(this.state.name)
+
+  componentWillMount() {
+    this.props.navigation.setParams({clickParams:this._btnClick})
   }
-  componentDidMount() {
-    this.props.navigation.setParams({navigatePress:this.save})
-  }
+  _btnClick=()=> {
+    Util.name = this.state.name;
+    this.props.navigation.state.params.callBack(Util.name);
+    this.props.navigation.goBack();
+
+  };
   render() {
     return(
       <View style={styles.container}>
@@ -36,7 +41,7 @@ export default class modifyName extends Component < {} > {
           <TextInput
             style={styles.input}
             onChangeText={(name) => this.setState({name})}
-            value={this.state.name}
+            value={Util.name}
             underlineColorAndroid='transparent'
             placeholder='请输入您的昵称'
           />
