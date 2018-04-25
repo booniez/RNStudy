@@ -7,7 +7,6 @@ import {
   Image,
   TextInput,
   FlatList,
-  ListView,
   TouchableOpacity,
 } from 'react-native';
 import Util from './../../util/util';
@@ -33,7 +32,9 @@ export default class refundCash extends Component < {} > {
     super(props);
     this.state = {
       text: '',
-      dataSource: ['add_image']
+      dataSource: [],
+      deleteIndex: 0,
+      imgCount: 0,
     }
   }
   static navigationOptions = {
@@ -85,26 +86,29 @@ export default class refundCash extends Component < {} > {
         </View>
 
         <View style={styles.listView}>
+          <View>
           <FlatList
             data={this.state.dataSource}
-            renderItem={({item}) => (
-              <View  >
+            renderItem={({item,index}) => (
+              <View>
                 <TouchableOpacity style={styles.uploadImg} onPress={this._choseImage.bind(this,item)} >
                   <Image source={{uri: item}} style={styles.uploadImgStyle} />
                   <View>
-                    <TouchableOpacity style={styles.deleteImgStyle} onPress={(item) => {
-
-                    }}>
-                      <Image  source={{uri: item == 'add_image' ? '' : 'delete'}} style={styles.deleteBtnStyle} />
+                    <TouchableOpacity style={styles.deleteImgStyle} onPress={this._deleteImg.bind(this,index,item)}>
+                      <Image  source={{uri: 'delete'}} style={styles.deleteBtnStyle} />
                     </TouchableOpacity>
                   </View>
-
-
                 </TouchableOpacity>
               </View>
             )}
             contentContainerStyle={styles.listViewStyle}//设置cell的样式
           />
+          </View>
+          <View>
+            <TouchableOpacity style={styles.uploadImgBtn} onPress={this._choseImage.bind(this)} >
+              <Image source={{uri: 'add_image'}} style={[styles.uploadImgBtnStyle,{width:this.state.dataSource.length === 3 ? 0 : 76*Util.size.width/375,}]} />
+            </TouchableOpacity>
+          </View>
         </View>
 
 
@@ -115,6 +119,28 @@ export default class refundCash extends Component < {} > {
          </TouchableOpacity>
       </View>
     );
+  }
+  _deleteImg(index) {
+      let {dataSource} = this.state;
+
+      let array = dataSource.slice(0);
+      console.log('数据源' + array);
+      let imgData = [];
+      for (var i = 0; i < array.length; i++) {
+        if (i === index) {
+          console.log('移除这一项');
+        }else {
+            imgData.push(array[i])
+        }
+      }
+
+
+      console.log('array-------' + imgData + 'index-------' + index);
+      this.setState({
+        dataSource: imgData,
+        imgCount: this.state.imgCount-1
+      })
+
   }
   _choseImage(item) {
     console.log(item.length);
@@ -128,19 +154,20 @@ export default class refundCash extends Component < {} > {
                    return
                }
                if(!response.error) {
-                 console.log('response');
+                 // console.log('response');
                  let {dataSource} = this.state;
                  let array = dataSource.slice(0);
+                 console.log('原来的数据源');
+                 console.log(array);
                  let imgData = [];
-                 for (var i = 0; i < array.length - 1; i++) {
+                 for (var i = 0; i < array.length; i++) {
                     imgData.push(array[i])
                  }
                  imgData.push(response.uri)
-                 imgData.length === 3 ? '' : imgData.push('add_image')
-                 // console.log('新的数组' +  array);
-                 console.log(this.state.dataSource);
+                 // imgData.length === 3 ? '' : imgData.push('add_image')
+                 console.log('新的数组' +  imgData);
                  this.setState({
-                   dataSource: imgData
+                   dataSource: imgData,
                  })
                }
            })
@@ -200,16 +227,23 @@ const styles = StyleSheet.create({
     marginLeft:16*Util.size.width/375,
     marginBottom:16*Util.size.width/375,
   },
+  uploadImgBtnStyle: {
+    height: 76*Util.size.width/375,
+    marginLeft:16*Util.size.width/375,
+    marginBottom:16*Util.size.width/375,
+  },
   upLoadImgView: {
     flexDirection: 'row'
   },
   listViewStyle: {
-    flexDirection:'row'
+    flexDirection:'row',
+    marginRight:0
   },
   listView: {
     width: Util.size.width,
     paddingTop: 16*Util.size.width/375,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flexDirection: 'row'
 
   },
   deleteImgStyle: {
@@ -224,3 +258,20 @@ const styles = StyleSheet.create({
     height: 18*Util.size.width/375,
   }
 })
+// <FlatList
+//   data={this.state.dataSource}
+//   renderItem={({item,index}) => (
+//
+//     <View>
+//       <TouchableOpacity style={styles.uploadImg} onPress={this._choseImage.bind(this,item)} >
+//         <Image source={{uri: item}} style={styles.uploadImgStyle} />
+//         <View>
+//           <TouchableOpacity style={styles.deleteImgStyle} onPress={this._deleteImg.bind(this,index,item)}>
+//             <Image  source={{uri: item === 'add_image' ? '' : 'delete'}} style={styles.deleteBtnStyle} />
+//           </TouchableOpacity>
+//         </View>
+//       </TouchableOpacity>
+//     </View>
+//   )}
+//   contentContainerStyle={styles.listViewStyle}//设置cell的样式
+// />
