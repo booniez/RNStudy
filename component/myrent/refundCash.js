@@ -111,9 +111,6 @@ export default class refundCash extends Component < {} > {
           </View>
         </View>
 
-
-
-
          <TouchableOpacity style={styles.BtnStyle} onPress={this._confirmInfo.bind(this)} >
            <Text style={{margin:10,color:'#fff'}} >确认提交</Text>
          </TouchableOpacity>
